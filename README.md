@@ -1,3 +1,16 @@
-#IFB102 Miniproject
+# IFB102 Miniproject
 
-My IFB102 Miniproject webserver using NodeJS, Typescript and Express. Planning to add React for frontend, add a login, etc.
+IFB103 Miniproject. Host a webserver on my Raspberry Pi. Run commands and view Pi data, have a login for security.
+
+Using:
+- NodeJS
+- Express
+- Typescript
+- Morgan
+- nodemon
+- Chalk
+- Rimraf
+
+Planning to add:
+- React for frontend
+- Passport for passwords
