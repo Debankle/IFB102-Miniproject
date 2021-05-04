@@ -12,7 +12,7 @@ ApiRoutes.get('/test', (req: express.Request, res: express.Response) => {
 });
 
 ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
-    exec('ip a', (error: any, stdout: any, stderr: any) => {
+    exec('ifconfig -a', (error: any, stdout: any, stderr: any) => {
         var msg: String;
 
         if (error) {
