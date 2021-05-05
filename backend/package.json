@@ -4,10 +4,10 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start-dev": "tsc-watch --project . --outDir ./build --onSuccess \"nodemon ./build/index.js\"",
+    "start-dev": "PORT=4000 tsc-watch --project . --outDir ./build --onSuccess \"nodemon ./build/index.js\"",
     "bstart": "npm run build && npm run start",
     "build": "rimraf ./build && tsc",
-    "start": "node build/index.js",
+    "start": "PORT=4000 node build/index.js",
     "clean": "rm -rf build"
   },
   "author": "Debankle",
