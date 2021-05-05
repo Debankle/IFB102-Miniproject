@@ -7,8 +7,14 @@ ApiRoutes.get('/', (req: express.Request, res: express.Response) => {
     res.send("Api Hello");
 });
 
-ApiRoutes.get('/test', (req: express.Request, res: express.Response) => {
-    res.send({ "hi": "hello", "status": 200 });
+ApiRoutes.get('/users', (req: express.Request, res: express.Response) => {
+    res.json([{
+        id: 1,
+        username: 'oliver'
+    }, {
+        id: 2,
+        username: 'poopy'
+    }]);
 });
 
 ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
