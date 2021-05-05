@@ -1,44 +1,52 @@
-import { Application } from 'express';
+import express, { Application } from 'express';
 import { MainRoutes, ApiRoutes } from './routes/router';
 import morganMiddleware from './config/morganMiddleware';
-
-const express = require('express');
+import * as http from 'http';
 
 
 class RaspiWebsiteBackend {
-    public backend: Application;
-    public port: number;
+    public app: Application;
+    public port: string;
     public ip: string;
+    public server: http.Server;
 
     constructor() {
-        this.backend = express();
-        this.port = 4200;
-        this.ip = '127.0.0.1'
-        
+        this.app = express();
+        this.port = process.env.PORT || '4200';
+        this.ip = '127.0.0.1';
+        this.server = http.createServer(this.app);
+
+        this.initDefaults();
         this.initMiddleware();
         this.initRoutes();
     }
 
     public listen(): void {
-        this.backend.listen(this.port, () => {
-            console.log(`Server is running at ${this.ip}:${this.port}`);
+        this.server.listen(this.port, () => {
+            var addr = this.server.address();
+            var bind = typeof addr === 'string' ? addr : this.port;
+            console.log(`The server is running on ${this.ip}:${bind}`);
         }).on('error', (err: Error) => {
             console.log(err);
         });
     }
 
+    private initDefaults(): void {
+        this.app.set('port', this.port);
+    }
+
     private initMiddleware(): void {
-        this.backend.use(morganMiddleware);
-        // this.backend.use(morgan(':date[clf] :remote-addr :user-agent HTTP/:http-version :method :url :res[content-length] :status :response-time'))
-        this.backend.use(express.json())
-        this.backend.use(express.urlencoded({
+        this.app.use(morganMiddleware);
+        // this.app.use(morgan(':date[clf] :remote-addr :user-agent HTTP/:http-version :method :url :res[content-length] :status :response-time'))
+        this.app.use(express.json())
+        this.app.use(express.urlencoded({
             extended: false
         }));
     }
 
     private initRoutes(): void {
-        this.backend.use('/', MainRoutes);
-        this.backend.use('/api', ApiRoutes);
+        this.app.use('/', MainRoutes);
+        this.app.use('/api', ApiRoutes);
     }
 }
 
