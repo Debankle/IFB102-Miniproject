@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start-dev": "nodemon",
+    "start-dev": "tsc-watch --project . --outDir ./build --onSuccess \"nodemon ./build/index.js\"",
     "bstart": "npm run build && npm run start",
     "build": "rimraf ./build && tsc",
     "start": "node build/index.js",
@@ -16,6 +16,7 @@
     "@types/express": "^4.17.11",
     "@types/morgan": "^1.9.2",
     "nodemon": "^2.0.7",
+    "tsc-watch": "^4.2.9",
     "typescript": "^4.2.4"
   },
   "dependencies": {
