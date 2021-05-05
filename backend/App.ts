@@ -37,7 +37,6 @@ class RaspiWebsiteBackend {
 
     private initMiddleware(): void {
         this.app.use(morganMiddleware);
-        // this.app.use(morgan(':date[clf] :remote-addr :user-agent HTTP/:http-version :method :url :res[content-length] :status :response-time'))
         this.app.use(express.json())
         this.app.use(express.urlencoded({
             extended: false
