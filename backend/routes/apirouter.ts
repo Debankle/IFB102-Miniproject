@@ -27,19 +27,15 @@ ApiRoutes.post('/test', (req: express.Request, res: express.Response) => {
 });
 
 ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
-    exec('ifconfig -a', (error: any, stdout: any, stderr: any) => {
+    exec('ip a', (error: any, stdout: any, stderr: any) => {
         var msg: String;
-
         if (error) {
             msg = 'error: ' + error.message;
         }
-
         if (stderr) {
             msg = ' stderr ' + stderr;
         }
-
         msg = stdout;
-
         res.send(msg);
     });
 });
