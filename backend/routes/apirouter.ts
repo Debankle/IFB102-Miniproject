@@ -23,7 +23,7 @@ ApiRoutes.get('/users', (req: express.Request, res: express.Response) => {
 ApiRoutes.post('/test', (req: express.Request, res: express.Response) => {
     bcrypt.compare(req.body.password, passwordHash, (err: Error, same: boolean) => {
         res.send(same);
-    })
+    });
 });
 
 ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
@@ -43,6 +43,5 @@ ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
         res.send(msg);
     });
 });
-
 
 export default ApiRoutes;

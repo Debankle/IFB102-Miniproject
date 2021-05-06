@@ -1,26 +1,21 @@
 import React, { Component } from 'react';
-import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import MainDisplay from './MainDisplay/MainDisplay';
+import Login from './Login/Login';
 
 
-interface User {
-    [key: string]: string;
-}
-
-class App extends Component {
-    state = {users: [] as User[]}
-
-    componentDidMount() {
-        fetch('/api/users').then(res => res.json()).then(users => this.setState({ users }))
-    }
+class App extends Component<{}, {}> {
 
     render() {
-        return(
-            <div className="App">
-                <h1>Data</h1>
-                {this.state.users.map(user =>
-                    <div key={user.id}>{user.username}</div>
-                )}
-            </div>
+        return (
+            <BrowserRouter>
+                <div className="app">
+                    <Switch>
+                        <Route path="/" exact component={MainDisplay}></Route>
+                        <Route path="/login" component={Login}></Route>
+                    </Switch>
+                </div>
+            </BrowserRouter>
         );
     }
 }
