@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-interface PasswordState {
-    password: string
+interface IState {
+    password: string;
 }
 
-class Login extends Component<{}, PasswordState> {
+class Login extends Component<{}, IState> {
 
     constructor(props: any) {
         super(props);
@@ -32,7 +32,7 @@ class Login extends Component<{}, PasswordState> {
             body: JSON.stringify({ password: this.state.password })
         }
 
-        fetch('/api/login', requestOptions).then(res => res.json()).then(res => {
+        fetch('/login', requestOptions).then(res => res.json()).then(res => {
             if (res.status === 200) {
                 console.log('Correct Password');
                 localStorage.setItem('login_token', res.token);
@@ -45,6 +45,22 @@ class Login extends Component<{}, PasswordState> {
 
         this.setState({
             password: ''
+        });
+    }
+
+    componentDidMount() {
+        var requestOptions = {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                token: localStorage.getItem('login_token') || ''
+            }
+        };
+        fetch('/login/verify', requestOptions).then(res => res.json()).then(res => {
+            if (res.status === 200) {
+                this.context.router.push('/');
+            }
         });
     }
 

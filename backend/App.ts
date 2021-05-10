@@ -1,5 +1,5 @@
 import express, { Application } from 'express';
-import { MainRoutes, ApiRoutes } from './routes/router';
+import { MainRoutes, ApiRoutes, LoginRoutes } from './routes/router';
 import morganMiddleware from './config/morganMiddleware';
 import * as http from 'http';
 
@@ -46,6 +46,7 @@ class RaspiWebsiteBackend {
     private initRoutes(): void {
         this.app.use('/', MainRoutes);
         this.app.use('/api', ApiRoutes);
+        this.app.use('/login', LoginRoutes);
     }
 }
 
