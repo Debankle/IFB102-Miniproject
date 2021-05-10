@@ -34,7 +34,7 @@ class Login extends Component<{}, PasswordState> {
             password: ''
         });
         
-        fetch('/api/test', requestOptions).then(res => res.text()).then(res => console.log(res));
+        fetch('/api/login', requestOptions).then(res => res.text()).then(res => console.log(res));
     }
 
     render() {

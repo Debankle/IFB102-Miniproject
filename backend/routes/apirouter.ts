@@ -1,6 +1,8 @@
 import * as express from 'express';
 import bcrypt from 'bcrypt';
 var exec = require('child_process').exec;
+import { createToken, verifyToken } from '../config/jwtMiddleware';
+
 
 const passwordHash = '$2b$10$sIWJf623Q1oOE/5I/ydt9ezY/hKYJqtxZw8F9m8KX507kfV2aNrA2'
 
@@ -20,9 +22,18 @@ ApiRoutes.get('/users', (req: express.Request, res: express.Response) => {
     }]);
 });
 
-ApiRoutes.post('/test', (req: express.Request, res: express.Response) => {
+ApiRoutes.post('/login', (req: express.Request, res: express.Response) => {
     bcrypt.compare(req.body.password, passwordHash, (err: Error, same: boolean) => {
-        res.send(same);
+        if (same) {
+            var token = createToken();
+            if (token.response === 400) {
+                res.status(400).json({ response: 400, message: token.str });
+            } else {
+                res.status(200).json({ response: 200, message: token.str });
+            }
+        } else {
+            res.json({ response: 403, message: 'Incorrect Password' });
+        }
     });
 });
 
@@ -36,8 +47,20 @@ ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
             msg = ' stderr ' + stderr;
         }
         msg = stdout;
-        res.send(msg);
+        res.status(403).json({ response: 403, message: msg });
     });
 });
+
+
+ApiRoutes.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    var token = req.body.token || req.body.query || req.headers['x-access-token'];
+    console.log(token);
+    if (verifyToken(token)) {
+        next();
+    } else {
+        res.status(403).json({ response: 403, message: 'not authorised' });
+    }
+});
+
 
 export default ApiRoutes;
