@@ -13,17 +13,13 @@ const ApiRoutes = express.Router();
 ApiRoutes.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (req.url !== '/login' && req.url !== '/verifyToken') {
         const token = req.headers.authorization || '';
-        try {
-            var decoded = jwt.verify(token, secret);
-            const verified = true;
-            if (verified) {
-                next();
+        jwt.verify(token, secret, (err, decoded) => {
+            if (err) {
+                res.status(401).send({ status: 401, message: err });
             } else {
-                res.status(401).send({ status: 401, message: 'Not Authorized' });
+                next();
             }
-        } catch (e) {
-            res.status(401).send({ status: 401, message: e });
-        }
+        });
     } else {
         next();
     }

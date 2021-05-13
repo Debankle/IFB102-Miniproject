@@ -39,7 +39,6 @@ class Login extends Component<{}, IState> {
             })
         }
         fetch('/api/login', requestOptions).then(res => res.json()).then(res => {
-            console.log(res);
             if (res.status === 200) {
                 localStorage.setItem('login_token', res.token);
                 window.location.href = '/';
