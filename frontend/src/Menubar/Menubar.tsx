@@ -12,6 +12,10 @@ class Menubar extends Component<{}, {}> {
         document.getElementById(id)?.setAttribute('className', 'active');
     }
 
+    logout() {
+        localStorage.setItem('login_token', '');
+    }
+
     render() {
         return (
             <div className="menubar">
@@ -20,6 +24,7 @@ class Menubar extends Component<{}, {}> {
                     <li><a id="news" className="kaput" href="#news">News</a></li>
                     <li><a id="contacts" className="kaput" href="#contact">Contact</a></li>
                     <li><a id="about" className="kaput" href="#about">About</a></li>
+                    <li><a id="home" className="kaput" href="/login" onClick={this.logout}>Logout</a></li>
                 </ul>
             </div>
         );

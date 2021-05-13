@@ -1,19 +1,40 @@
 import * as express from 'express';
 import bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 var exec = require('child_process').exec;
-import { createToken, verifyToken } from '../config/jwtMiddleware';
-
 
 const passwordHash = '$2b$10$sIWJf623Q1oOE/5I/ydt9ezY/hKYJqtxZw8F9m8KX507kfV2aNrA2'
+const secret: jwt.Secret = "401275e0b162b6c8b93db0c31a3d63d87ceb1a1a3ed5263c292de6cec61410a0";
+
 
 const ApiRoutes = express.Router();
+
+
+ApiRoutes.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (req.url !== '/login' && req.url !== '/verifyToken') {
+        const token = req.headers.authorization || '';
+        try {
+            var decoded = jwt.verify(token, secret);
+            const verified = true;
+            if (verified) {
+                next();
+            } else {
+                res.status(401).send({ status: 401, message: 'Not Authorized' });
+            }
+        } catch (e) {
+            res.status(401).send({ status: 401, message: e });
+        }
+    } else {
+        next();
+    }
+});
 
 ApiRoutes.get('/', (req: express.Request, res: express.Response) => {
     res.send("Api Hello");
 });
 
 ApiRoutes.get('/users', (req: express.Request, res: express.Response) => {
-    res.json([{
+    res.status(200).json([{
         id: 1,
         username: 'oliver'
     }, {
@@ -25,12 +46,28 @@ ApiRoutes.get('/users', (req: express.Request, res: express.Response) => {
 ApiRoutes.post('/login', (req: express.Request, res: express.Response) => {
     bcrypt.compare(req.body.password, passwordHash, (err: Error, same: boolean) => {
         if (same) {
-            var token = createToken();
-            res.status(200).json({ status: 200, token: token.str });
+            const time = Date.now();
+            try {
+                const token = jwt.sign({ time: time }, secret, { expiresIn: '1h' });
+                res.status(200).send({ status: 200, token: token });
+            } catch (err) {
+                res.status(401).send({ status: 401, message: "There was an error signing in" });
+                console.log(err);
+            }
         } else {
-            res.json({ status: 403, message: 'Incorrect Password' });
+            res.status(401).send({ status: 401, message: "Incorrect Password" });
         }
     });
+});
+
+ApiRoutes.get('/verifyToken', (req: express.Request, res: express.Response) => {
+    const token = req.body.token || '';
+    try {
+        const decoded = jwt.verify(token, secret);
+        res.status(200).send({ status: 200, message: 'Token Verified' });
+    } catch (err) {
+        res.status(401).send({ status: 401, message: err });
+    }
 });
 
 ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
@@ -43,20 +80,8 @@ ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
             msg = ' stderr ' + stderr;
         }
         msg = stdout;
-        res.json({ status: 200, message: msg });
+        res.status(200).json({ status: 200, data: msg });
     });
-});
-
-
-ApiRoutes.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.log('poop');
-    var token = req.body.token || req.body.query || req.headers['x-access-token'];
-    console.log(token);
-    if (verifyToken(token)) {
-        next();
-    } else {
-        res.json({ status: 403, message: 'not authorised' });
-    }
 });
 
 

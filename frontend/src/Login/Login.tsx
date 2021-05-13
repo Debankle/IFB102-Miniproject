@@ -20,31 +20,54 @@ class Login extends Component<{}, PasswordState> {
         });
     }
 
+    _setErrMessage(err: any) {
+        let errorTextP = document.getElementById('errorText') as HTMLElement;
+        errorTextP.innerHTML = err;
+    }
+
     handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
         event.preventDefault();
 
-        var requestOptions = {
+        const requestOptions = {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ password: this.state.password })
+            body: JSON.stringify({
+                password: this.state.password
+            })
         }
-
         fetch('/api/login', requestOptions).then(res => res.json()).then(res => {
+            console.log(res);
             if (res.status === 200) {
-                console.log('Correct Password');
                 localStorage.setItem('login_token', res.token);
-                // Reload
+                window.location.href = '/';
             } else {
-                console.log('Incorrect Password');
-                // Try again
+                this._setErrMessage(res.message);
             }
         });
 
         this.setState({
             password: ''
+        });
+    }
+
+    componentDidMount() {
+        const requestOptions = {
+            method: 'GET',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            headers: {
+                authorization: localStorage.getItem('login_token') || ''
+            }
+        }
+        fetch('/api/verifyToken', requestOptions).then(res => res.json()).then(res => {
+            if (res.status === 200) {
+                window.location.href = '/';
+            } else {
+                localStorage.setItem('login_token', '');
+            }
         });
     }
 
@@ -57,6 +80,7 @@ class Login extends Component<{}, PasswordState> {
                     <input type="password" name="password" onChange={this.handleChange} value={this.state.password} />
                     <input type="submit" value="submit" />
                 </form>
+                <div className="errorBox" id="errorBox"><p id="errorText"></p></div>
             </div>
         );
     }

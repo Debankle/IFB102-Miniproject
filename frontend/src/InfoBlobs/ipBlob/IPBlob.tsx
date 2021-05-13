@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+
 
 interface IState {
     ipData: string;
-    authFail: boolean;
 }
 
 class IPBlob extends Component<{}, IState> {
@@ -11,31 +10,36 @@ class IPBlob extends Component<{}, IState> {
     constructor(props: {}) {
         super(props);
 
-        this.state = { ipData: '', authFail: false };
+        this.state = { ipData: '' };
     }
 
     componentDidMount() {
-        fetch('/api/ip').then(res => res.json()).then(res => {
-            console.log(res);
-            if (res.response === 403) {
-                this.setState({ authFail: true });
+        const requestOptions = {
+            method: 'GET',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            headers: {
+                authorization: localStorage.getItem('login_token') || ''
+            }
+        }
+        fetch('/api/ip', requestOptions).then(res => res.json()).then(res => {
+            if (res.status === 401) {
+                localStorage.setItem('login_token', '');
+                window.location.href = '/login';
             } else {
-                this.setState({ ipData: res.message });
+                this.setState({ ipData: res.data });
             }
         });
     }
 
     render() {
-        if (this.state.authFail) {
-            return <Redirect to="/login" />
-        } else {
-            return (
-                <div className="ip-blob">
-                    <h4>IP Config Output</h4>
-                    <p>{this.state.ipData}</p>
-                </div>
-            );
-        }
+
+        return (
+            <div className="ip-blob">
+                <h4>IP Config Output</h4>
+                <p>{this.state.ipData}</p>
+            </div>
+        );
     }
 }
 
