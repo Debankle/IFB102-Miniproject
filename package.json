@@ -1,0 +1,24 @@
+{
+  "name": "miniproject",
+  "version": "1.0.0",
+  "description": "IFB103 Miniproject. Host a webserver on my Raspberry Pi. Run commands and view Pi data, have a login for security.",
+  "main": "''",
+  "scripts": {
+    "server": "cd backend && npm run build && npm run start",
+    "client": "cd frontend && npm run start",
+    "both": "cocurrently \"npm run server\" \"npm run client\"",
+    "server-dev": "cd backend && npm run start-dev",
+    "client-dev": "cd frontend && npm run start",
+    "both-dev": "concurrently \"npm run server-dev\" \"npm run client-dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Debankle/Miniproject.git"
+  },
+  "author": "Debankle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Debankle/Miniproject/issues"
+  },
+  "homepage": "https://github.com/Debankle/Miniproject#readme"
+}

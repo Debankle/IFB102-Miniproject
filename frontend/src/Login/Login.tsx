@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
-interface PasswordState {
-    password: string
+interface IState {
+    password: string;
 }
 
-
-class Login extends Component<{}, PasswordState> {
+class Login extends Component<{}, IState> {
 
     constructor(props: any) {
         super(props);
@@ -21,20 +20,55 @@ class Login extends Component<{}, PasswordState> {
         });
     }
 
+    _setErrMessage(err: any) {
+        let errorTextP = document.getElementById('errorText') as HTMLElement;
+        errorTextP.innerHTML = err;
+    }
+
     handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
         event.preventDefault();
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state)
-        };
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                password: this.state.password
+            })
+        }
+        fetch('/api/login', requestOptions).then(res => res.json()).then(res => {
+            console.log(res);
+            if (res.status === 200) {
+                localStorage.setItem('login_token', res.token);
+                window.location.href = '/';
+            } else {
+                this._setErrMessage(res.message);
+            }
+        });
 
         this.setState({
             password: ''
         });
-        
-        fetch('/api/login', requestOptions).then(res => res.text()).then(res => console.log(res));
+    }
+
+    componentDidMount() {
+        const requestOptions = {
+            method: 'GET',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            headers: {
+                authorization: localStorage.getItem('login_token') || ''
+            }
+        }
+        fetch('/api/verifyToken', requestOptions).then(res => res.json()).then(res => {
+            if (res.status === 200) {
+                window.location.href = '/';
+            } else {
+                localStorage.setItem('login_token', '');
+            }
+        });
     }
 
     render() {
@@ -46,6 +80,7 @@ class Login extends Component<{}, PasswordState> {
                     <input type="password" name="password" onChange={this.handleChange} value={this.state.password} />
                     <input type="submit" value="submit" />
                 </form>
+                <div className="errorBox" id="errorBox"><p id="errorText"></p></div>
             </div>
         );
     }
