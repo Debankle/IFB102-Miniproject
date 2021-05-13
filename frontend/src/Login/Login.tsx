@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-interface PasswordState {
-    password: string
+interface IState {
+    password: string;
 }
 
-class Login extends Component<{}, PasswordState> {
+class Login extends Component<{}, IState> {
 
     constructor(props: any) {
         super(props);
