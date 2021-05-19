@@ -66,6 +66,12 @@ ApiRoutes.get('/verifyToken', (req: express.Request, res: express.Response) => {
     }
 });
 
+
+
+
+
+
+
 ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
     exec('ifconfig -a', (error: any, stdout: any, stderr: any) => {
         var msg: String;
@@ -80,5 +86,60 @@ ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
     });
 });
 
+ApiRoutes.get('/temp', (req: express.Request, res: express.Response) => {
+    exec('vcgencmd measure_temp', (error: any, stdout: any, stderr: any) => {
+        var msg: String;
+        if (error) {
+            msg = 'error: ' + error.message;
+        }
+        if (stderr) {
+            msg = ' stderr ' + stderr;
+        }
+        msg = stdout;
+        res.status(200).json({ status: 200, data: msg });
+    });
+});
+
+ApiRoutes.get('/storage', (req: express.Request, res:express.Response) => {
+    exec('df', (error: any, stdout: any, stderr: any) => {
+        var msg: String;
+        if (error) {
+            msg = 'error: ' + error.message;
+        }
+        if (stderr) {
+            msg = ' stderr ' + stderr;
+        }
+        msg = stdout;
+        res.status(200).json({ status: 200, data: msg });
+    });
+});
+
+ApiRoutes.get('/ram', (req: express.Request, res: express.Response) => {
+    exec('free -h', (error: any, stdout: any, stderr: any) => {
+        var msg: String;
+        if (error) {
+            msg = 'error: ' + error.message;
+        }
+        if (stderr) {
+            msg = ' stderr ' + stderr;
+        }
+        msg = stdout;
+        res.status(200).json({ status: 200, data: msg });
+    });
+});
+
+ApiRoutes.get('/struct', (req: express.Request, res: express.Response) => {
+    exec('tree ~ -x -L 3', (error: any, stdout: any, stderr: any) => {
+        var msg: String;
+        if (error) {
+            msg = 'error: ' + error.message;
+        }
+        if (stderr) {
+            msg = ' stderr ' + stderr;
+        }
+        msg = stdout;
+        res.status(200).json({ status: 200, data: msg });
+    });
+});
 
 export default ApiRoutes;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './MainDisplay.css';
 import Menubar from '../Menubar/Menubar';
-import IPBlob from '../InfoBlobs/ipBlob/IPBlob';
+import * as Blob from '../InfoBlobs/infoBlobs';
 
 interface IProps {
 }
@@ -17,7 +17,10 @@ class MainDisplay extends Component<IProps, IState> {
             <div className="App">
                 <Menubar />
                 <h1>Raspberry Pi Webserver</h1>
-                <IPBlob />
+                <Blob.IPBlob />
+                <Blob.RAMBlob />
+                <Blob.StorageBlob />
+                <Blob.fsBlob />
             </div>
         );
     }
