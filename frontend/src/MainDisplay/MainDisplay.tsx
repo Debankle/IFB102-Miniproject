@@ -16,11 +16,12 @@ class MainDisplay extends Component<IProps, IState> {
         return(
             <div className="App">
                 <Menubar />
-                <h1>Raspberry Pi Webserver</h1>
                 <Blob.IPBlob />
                 <Blob.RAMBlob />
                 <Blob.StorageBlob />
-                <Blob.fsBlob />
+                <Blob.TempBlob />
+                <Blob.FSBlob />
+                <Blob.CustomBlob />
             </div>
         );
     }

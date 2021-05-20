@@ -66,12 +66,6 @@ ApiRoutes.get('/verifyToken', (req: express.Request, res: express.Response) => {
     }
 });
 
-
-
-
-
-
-
 ApiRoutes.get('/ip', (req: express.Request, res: express.Response) => {
     exec('ifconfig -a', (error: any, stdout: any, stderr: any) => {
         var msg: String;
@@ -100,7 +94,7 @@ ApiRoutes.get('/temp', (req: express.Request, res: express.Response) => {
     });
 });
 
-ApiRoutes.get('/storage', (req: express.Request, res:express.Response) => {
+ApiRoutes.get('/storage', (req: express.Request, res: express.Response) => {
     exec('df', (error: any, stdout: any, stderr: any) => {
         var msg: String;
         if (error) {
@@ -129,7 +123,7 @@ ApiRoutes.get('/ram', (req: express.Request, res: express.Response) => {
 });
 
 ApiRoutes.get('/struct', (req: express.Request, res: express.Response) => {
-    exec('tree ~ -x -L 3', (error: any, stdout: any, stderr: any) => {
+    exec('tree ~ -x -L 2', (error: any, stdout: any, stderr: any) => {
         var msg: String;
         if (error) {
             msg = 'error: ' + error.message;
@@ -140,6 +134,20 @@ ApiRoutes.get('/struct', (req: express.Request, res: express.Response) => {
         msg = stdout;
         res.status(200).json({ status: 200, data: msg });
     });
+});
+
+ApiRoutes.post('/custom', (req: express.Request, res: express.Response) => {
+    exec(req.body.command, (error: any, stdout: any, stderr: any) => {
+        var msg = '';
+        if (error) {
+            msg += 'error: ' + error.message;
+        }
+        if (stderr) {
+            msg += ' stderr: ' + stderr;
+        }
+        msg += stdout;
+        res.status(200).json({ status: 200, data: msg });
+    })
 });
 
 export default ApiRoutes;

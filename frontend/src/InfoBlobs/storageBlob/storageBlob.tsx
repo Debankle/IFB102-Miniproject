@@ -1,16 +1,8 @@
 import { Component } from 'react';
-import { storageBlob } from '../infoBlobs';
+import './storageBlob.css';
 
-interface StorageState {
-    storageData: String
-};
+class StorageBlob extends Component<{}, {}> {
 
-class StorageBlob extends Component<{}, StorageState> {
-    constructor(props: {}) {
-        super(props);
-
-        this.state = { storageData: '' };
-    }
 
     componentDidMount() {
         const requestOptions = {
@@ -26,7 +18,21 @@ class StorageBlob extends Component<{}, StorageState> {
                 localStorage.setItem('login_token', '');
                 window.location.href = '/login';
             } else {
-                this.setState({ storageData: res.data });
+                var returnArr = res.data.split('\n');
+                var tableDomData = '<table><tr><th>Filesystem</th><th>512-blocks</th><th>Used</th><th>Available</th><th>Capacity</th><th>iused</th><th>ifree</th><th>%iused</th><th>Mounted On</th></tr>';
+                for (var i = 1; i < returnArr.length-2; i++) {
+                    var dataArr = returnArr[i].split(' ');
+                    var rowDOMData = '<tr>';
+                    for (var j = 0; j < dataArr.length; j++) {
+                        if (dataArr[j] !== '') {
+                            rowDOMData += '<td>' + dataArr[j] + '</td>';
+                        }
+                    }
+                    tableDomData += rowDOMData + '</tr>';
+                }
+                tableDomData += '</table>';
+                
+                (document.getElementById('tableSpot') as HTMLElement).innerHTML = tableDomData;
             }
         });
     }
@@ -35,8 +41,8 @@ class StorageBlob extends Component<{}, StorageState> {
 
         return (
             <div className="ip-blob">
-                <h4>Storage Output</h4>
-                <p>{this.state.storageData}</p>
+                <h4>Storage</h4>
+                <div id="tableSpot"></div>
             </div>
         );
     }

@@ -1,14 +1,15 @@
 import { Component } from 'react';
 
-interface fsState {
-    fsData: String
+interface TempState {
+    temp: string
 };
 
-class FSBlob extends Component<{}, fsState> {
+class TempBlob extends Component<{}, TempState> {
+
     constructor(props: {}) {
         super(props);
 
-        this.state = { fsData: '' };
+        this.state = { temp: '' };
     }
 
     componentDidMount() {
@@ -20,12 +21,12 @@ class FSBlob extends Component<{}, fsState> {
                 authorization: localStorage.getItem('login_token') || ''
             }
         }
-        fetch('/api/struct', requestOptions).then(res => res.json()).then(res => {
+        fetch('/api/temp', requestOptions).then(res => res.json()).then(res => {
             if (res.status === 401) {
                 localStorage.setItem('login_token', '');
                 window.location.href = '/login';
             } else {
-                this.setState({ fsData: res.data });
+                this.setState({ temp: res.data });
             }
         });
     }
@@ -34,11 +35,12 @@ class FSBlob extends Component<{}, fsState> {
 
         return (
             <div className="ip-blob">
-                <h4>Filestructure Output</h4>
-                <p>{this.state.fsData}</p>
+                <h4>Temperature Output</h4>
+                <p>{this.state.temp}</p>
             </div>
         );
     }
-}
 
-export default FSBlob;
+};
+
+export default TempBlob;

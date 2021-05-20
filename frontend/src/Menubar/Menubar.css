@@ -3,7 +3,6 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
 }
 
 li {
@@ -21,6 +20,15 @@ li a {
 li a:hover:not(.active) {
   background-color: #111;
 }
+
+.menubar {
+    background-color: #333;
+}
+
+.Title {
+    color: #fff;
+}
+
 
 .active {
   background-color: #4CAF50;
