@@ -1,0 +1,16 @@
+.custom-blob {
+    width: 42%;
+    padding: 10px;
+}
+
+.cmdInput {
+    width: 80%;
+}
+
+.responseInfo {
+    height: 150px;
+    border: thin solid black;
+    width: 100%;
+    overflow-y: scroll;
+    white-space: pre-line;
+}

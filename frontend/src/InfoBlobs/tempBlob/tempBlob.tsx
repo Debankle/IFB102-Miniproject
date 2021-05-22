@@ -34,7 +34,7 @@ class TempBlob extends Component<{}, TempState> {
     render() {
 
         return (
-            <div className="ip-blob">
+            <div className="temp-blob">
                 <h4>Temperature Output</h4>
                 <p>{this.state.temp}</p>
             </div>

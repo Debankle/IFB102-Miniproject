@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './customBlob.css';
 
 interface CustomState {
     command: string;
@@ -46,9 +47,11 @@ class CustomBlob extends Component<{}, CustomState> {
 
     render() {
         return (
-            <div>
+            <div className="custom-blob">
+                <h4>Custom Command</h4>
+
                 <form onSubmit={this.commandSend}>
-                    <input type="input" name="command" onChange={this.handleChange} value={this.state.command} />
+                    <input className="cmdInput" type="input" name="command" onChange={this.handleChange} value={this.state.command} />
                     <input type="submit" value="submit" />
                 </form>
                 <p className="responseInfo" id="responseInfo">{this.state.commandResponse}</p>

@@ -18,3 +18,7 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.storage-blob {
+    margin: 10px;
+}

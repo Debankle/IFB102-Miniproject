@@ -33,7 +33,7 @@ class FSBlob extends Component<{}, fsState> {
     render() {
 
         return (
-            <div className="ip-blob">
+            <div className="fs-blob">
                 <h4>Filestructure Output</h4>
                 <p>{this.state.fsData}</p>
             </div>

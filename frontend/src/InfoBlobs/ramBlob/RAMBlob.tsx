@@ -33,7 +33,7 @@ class RAMBlob extends Component<{}, RamState> {
     render() {
 
         return (
-            <div className="ip-blob">
+            <div className="ram-blob">
                 <h4>Ram Output</h4>
                 <p>{this.state.ramData}</p>
             </div>

@@ -13,15 +13,24 @@ interface IState {
 class MainDisplay extends Component<IProps, IState> {
 
     render() {
-        return(
+        return (
             <div className="App">
                 <Menubar />
-                <Blob.IPBlob />
-                <Blob.RAMBlob />
+                <div className="row1">
+                    <Blob.IPBlob />
+                    <div className="col1">
+                        <Blob.RAMBlob />
+                        <Blob.TempBlob />
+                    </div>
+                    <Blob.CustomBlob />
+                </div >
+
+                <br></br>
+
                 <Blob.StorageBlob />
-                <Blob.TempBlob />
+
+
                 <Blob.FSBlob />
-                <Blob.CustomBlob />
             </div>
         );
     }
