@@ -1,7 +1,11 @@
 import { Component } from 'react';
+import './tempBlob.css';
 
 interface TempState {
-    temp: string
+    celcius: string;
+    farenheit: string;
+    kelvin: string;
+    rankine: string;
 };
 
 class TempBlob extends Component<{}, TempState> {
@@ -9,10 +13,15 @@ class TempBlob extends Component<{}, TempState> {
     constructor(props: {}) {
         super(props);
 
-        this.state = { temp: '' };
+        this.state = {
+            celcius: '',
+            farenheit: '',
+            kelvin: '',
+            rankine: ''
+        };
     }
 
-    componentDidMount() {
+    getTemp() {
         const requestOptions = {
             method: 'GET',
             Accept: 'application/json',
@@ -26,9 +35,22 @@ class TempBlob extends Component<{}, TempState> {
                 localStorage.setItem('login_token', '');
                 window.location.href = '/login';
             } else {
-                this.setState({ temp: res.data });
+                var tempIndex = res.data.indexOf('=');
+                var endIndex = res.data.indexOf('\'');
+                var celciusTemp = parseInt(res.data.slice(tempIndex + 1, endIndex));
+                this.setState({ celcius: `${celciusTemp}\u00B0C` });
+                this.setState({ farenheit: `${celciusTemp * 1.8 + 32}\u00B0F` });
+                this.setState({ kelvin: `${celciusTemp + 273.15}\u00B0K` });
+                this.setState({ rankine: `${(celciusTemp + 273.15) * 9 / 5}\u00B0R` });
             }
         });
+    }
+
+    componentDidMount() {
+        this.getTemp();
+        setInterval(() => {
+            this.getTemp();
+        }, 1000);
     }
 
     render() {
@@ -36,7 +58,14 @@ class TempBlob extends Component<{}, TempState> {
         return (
             <div className="temp-blob">
                 <h4>Temperature Output</h4>
-                <p>{this.state.temp}</p>
+                <div className="tempRow">
+                    <p className="tempP">Celcius: {this.state.celcius}</p>
+                    <p className="tempP">Farenheit: {this.state.farenheit}</p>
+                </div>
+                <div className="tempRow">
+                    <p className="tempP">Kelvin: {this.state.kelvin}</p>
+                    <p className="tempP">Rankine: {this.state.rankine}</p>
+                </div>
             </div>
         );
     }

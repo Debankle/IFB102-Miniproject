@@ -1,0 +1,11 @@
+.tempRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.tempP {
+    padding: 10px;
+    margin: 0px;
+}
