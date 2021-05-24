@@ -13,7 +13,7 @@ const ApiRoutes = express.Router();
 ApiRoutes.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (req.url !== '/login' && req.url !== '/verifyToken') {
         const token = req.headers.authorization || '';
-        jwt.verify(token, secret, (err, decoded) => {
+        jwt.verify(token, secret, (err: any, decoded: any) => {
             if (err) {
                 res.status(401).send({ status: 401, message: err });
             } else {

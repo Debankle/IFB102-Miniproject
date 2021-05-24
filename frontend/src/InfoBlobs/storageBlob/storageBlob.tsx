@@ -19,8 +19,8 @@ class StorageBlob extends Component<{}, {}> {
                 window.location.href = '/login';
             } else {
                 var returnArr = res.data.split('\n');
-                var tableDomData = '<table><tr><th>Filesystem</th><th>512-blocks</th><th>Used</th><th>Available</th><th>Capacity</th><th>iused</th><th>ifree</th><th>%iused</th><th>Mounted On</th></tr>';
-                for (var i = 1; i < returnArr.length - 2; i++) {
+                var tableDomData = '<table><tr><th>Filesystem</th><th>1K-blocks</th><th>Used</th><th>Available</th><th>Use%</th><th>Mounted On</th></tr>';
+                for (var i = 1; i < returnArr.length - 1; i++) {
                     var dataArr = returnArr[i].split(' ');
                     var rowDOMData = '<tr>';
                     for (var j = 0; j < dataArr.length; j++) {

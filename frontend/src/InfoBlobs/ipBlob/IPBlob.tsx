@@ -71,7 +71,8 @@ class IPBlob extends Component<{}, IState> {
                         var ether = res.data.slice(etherIndex+6, nextSpaceyboi);
                         this.setState({ ether: ether });
 
-                        var netmask = res.data.slice(indexNextSpace + 8, indexNextSpace + 19);
+			var netmaskSpace = res.data.indexOf(' ', indexNextSpace+2);
+                        var netmask = res.data.slice(netmaskSpace, netmaskSpace + 16);
                         this.setState({ netmask: netmask });
 
                         var broadcastEnd = res.data.indexOf('255', indexNextSpace + 31) + 3;

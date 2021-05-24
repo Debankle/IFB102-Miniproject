@@ -38,10 +38,10 @@ class TempBlob extends Component<{}, TempState> {
                 var tempIndex = res.data.indexOf('=');
                 var endIndex = res.data.indexOf('\'');
                 var celciusTemp = parseInt(res.data.slice(tempIndex + 1, endIndex));
-                this.setState({ celcius: `${celciusTemp}\u00B0C` });
-                this.setState({ farenheit: `${celciusTemp * 1.8 + 32}\u00B0F` });
-                this.setState({ kelvin: `${celciusTemp + 273.15}\u00B0K` });
-                this.setState({ rankine: `${(celciusTemp + 273.15) * 9 / 5}\u00B0R` });
+                this.setState({ celcius: `${Math.round(celciusTemp)}\u00B0C` });
+                this.setState({ farenheit: `${Math.round(celciusTemp * 1.8 + 32)}\u00B0F` });
+                this.setState({ kelvin: `${Math.round(celciusTemp + 273.15)}\u00B0K` });
+                this.setState({ rankine: `${Math.round((celciusTemp + 273.15) * 9 / 5)}\u00B0R` });
             }
         });
     }
