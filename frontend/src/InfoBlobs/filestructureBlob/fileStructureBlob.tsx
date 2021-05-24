@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import './fileStructureBlob.css';
 
 interface fsState {
     fsData: String
@@ -34,8 +35,8 @@ class FSBlob extends Component<{}, fsState> {
 
         return (
             <div className="fs-blob">
-                <h4>Filestructure Output</h4>
-                <p>{this.state.fsData}</p>
+                <h4>Filestructure of ~ 3 layers deep</h4>
+                <p className="filesystemP">{this.state.fsData}</p>
             </div>
         );
     }
