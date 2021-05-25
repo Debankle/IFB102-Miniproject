@@ -123,7 +123,7 @@ ApiRoutes.get('/ram', (req: express.Request, res: express.Response) => {
 });
 
 ApiRoutes.get('/struct', (req: express.Request, res: express.Response) => {
-    exec('tree ~ -x -L 2', (error: any, stdout: any, stderr: any) => {
+    exec('tree ~ -x -L 3', (error: any, stdout: any, stderr: any) => {
         var msg: String;
         if (error) {
             msg = 'error: ' + error.message;
