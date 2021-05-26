@@ -57,7 +57,7 @@ ApiRoutes.post('/login', (req: express.Request, res: express.Response) => {
 });
 
 ApiRoutes.get('/verifyToken', (req: express.Request, res: express.Response) => {
-    const token = req.body.token || '';
+    const token = req.headers.authorization || ' ';
     try {
         const decoded = jwt.verify(token, secret);
         res.status(200).send({ status: 200, message: 'Token Verified' });

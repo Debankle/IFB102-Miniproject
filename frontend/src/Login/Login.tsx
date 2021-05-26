@@ -65,6 +65,7 @@ class Login extends Component<{}, IState> {
             if (res.status === 200) {
                 window.location.href = '/';
             } else {
+                console.log(res.err);
                 localStorage.setItem('login_token', '');
             }
         });
