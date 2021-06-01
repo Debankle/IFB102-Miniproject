@@ -19,11 +19,15 @@ class MainDisplay extends Component<IProps, IState> {
                 <div className="row1">
                     <Blob.IPBlob />
                     <div className="col1">
-                        <Blob.TimeBlob />
                         <Blob.RAMBlob />
                         <Blob.TempBlob />
                     </div>
-                    <Blob.CustomBlob />
+
+                    <div className="col1">
+                        <Blob.TimeBlob />
+                        <Blob.CustomBlob />
+                    </div>
+
                 </div >
 
                 <br></br>
