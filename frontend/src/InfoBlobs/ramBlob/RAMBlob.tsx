@@ -26,7 +26,7 @@ class RAMBlob extends Component<{}, RamState> {
                 window.location.href = '/login';
             } else {
                 var returnArrRam = res.data.split('\n');
-                var tableDomDataRam = '<table><tr><th></th><th>total</th><th>used</th><th>free</th><th>shared</th><th>buff/cache</th><th>available</th></tr></table>';
+                var tableDomDataRam = '<table><tr><th></th><th>total</th><th>used</th><th>free</th><th>shared</th><th>buff/cache</th><th>available</th></tr>';
                 for (var i = 1; i < returnArrRam.length - 1; i++) {
                     var dataArrRam = returnArrRam[i].split(' ');
                     var rowDataRam = '<tr>';
