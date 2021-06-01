@@ -32,10 +32,10 @@ class RAMBlob extends Component<{}, RamState> {
                     var rowDataRam = '<tr>';
                     for (var j = 0; j < dataArrRam.length; j++) {
                         if (dataArrRam[j] !== '') {
-                            console.log(dataArrRam[j]);
                             rowDataRam += '<td>' + dataArrRam[j] + '</td>'
                         }
                     }
+                    console.log(rowDataRam);
                     tableDomDataRam += rowDataRam + '</tr>';
                 }
                 tableDomDataRam += '</table>';
