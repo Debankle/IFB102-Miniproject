@@ -26,20 +26,20 @@ class RAMBlob extends Component<{}, RamState> {
                 window.location.href = '/login';
             } else {
 
-                var returnArr = res.data.split('\n');
-                var tableDomData = '<table><tr><th></th><th>total</th><th>used</th><th>free</th><th>shared</th><th>buff/cache</th><th>available</th></tr></table>';
-                for (var i = 1; i < returnArr.length - 1; i++) {
-                    var dataArr = returnArr[i].split(' ');
-                    var rowData = '<tr>';
-                    for (var j = 0; j < dataArr.length; j++) {
-                        if (dataArr[j] !== '') {
-                            rowData += '<td>' + dataArr[j] + '</td>'
+                var returnArrRam = res.data.split('\n');
+                var tableDomDataRam = '<table><tr><th></th><th>total</th><th>used</th><th>free</th><th>shared</th><th>buff/cache</th><th>available</th></tr></table>';
+                for (var i = 1; i < returnArrRam.length - 1; i++) {
+                    var dataArrRam = returnArrRam[i].split(' ');
+                    var rowDataRam = '<tr>';
+                    for (var j = 0; j < dataArrRam.length; j++) {
+                        if (dataArrRam[j] !== '') {
+                            rowDataRam += '<td>' + dataArrRam[j] + '</td>'
                         }
                     }
-                    tableDomData += rowData + '</tr>';
+                    tableDomDataRam += rowDataRam + '</tr>';
                 }
-                tableDomData += '</table>';
-                (document.getElementById('tableSpot') as HTMLElement).innerHTML = tableDomData;
+                tableDomDataRam += '</table>';
+                (document.getElementById('tableSpotRam') as HTMLElement).innerHTML = tableDomDataRam;
             }
         });
     }
@@ -49,7 +49,7 @@ class RAMBlob extends Component<{}, RamState> {
         return (
             <div className="ram-blob">
                 <h4>Ram Output</h4>
-                <div id="tableSpot"></div>
+                <div id="tableSpotRam"></div>
             </div>
         );
     }
