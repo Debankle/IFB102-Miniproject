@@ -25,7 +25,21 @@ class RAMBlob extends Component<{}, RamState> {
                 localStorage.setItem('login_token', '');
                 window.location.href = '/login';
             } else {
-                this.setState({ ramData: res.data });
+
+                var returnArr = res.data.split('\n');
+                var tableDomData = '<table><tr><th></th><th>total</th><th>used</th><th>free</th><th>shared</th><th>buff/cache</th><th>available</th></tr></table>';
+                for (var i = 1; i < returnArr.length - 1; i++) {
+                    var dataArr = returnArr[i].split(' ');
+                    var rowData = '<tr>';
+                    for (var j = 0; j < dataArr.length; j++) {
+                        if (dataArr[j] !== '') {
+                            rowData += '<td>' + dataArr[j] + '</td>'
+                        }
+                    }
+                    tableDomData += rowData + '</tr>';
+                }
+                tableDomData += '</table>';
+                (document.getElementById('tableSpot') as HTMLElement).innerHTML = tableDomData;
             }
         });
     }
@@ -35,7 +49,7 @@ class RAMBlob extends Component<{}, RamState> {
         return (
             <div className="ram-blob">
                 <h4>Ram Output</h4>
-                <p>{this.state.ramData}</p>
+                <div id="tableSpot"></div>
             </div>
         );
     }

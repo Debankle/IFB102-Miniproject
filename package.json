@@ -1,7 +1,7 @@
 {
   "name": "miniproject",
   "version": "1.0.0",
-  "description": "IFB103 Miniproject. Host a webserver on my Raspberry Pi. Run commands and view Pi data, have a login for security.",
+  "description": "IFB102 Miniproject. Host a webserver on my Raspberry Pi. Run commands and view Pi data, have a login for security.",
   "main": "''",
   "scripts": {
     "server": "cd backend && npm run build && npm run start",
