@@ -35,10 +35,10 @@ class RAMBlob extends Component<{}, RamState> {
                             rowDataRam += '<td>' + dataArrRam[j] + '</td>'
                         }
                     }
-                    console.log(rowDataRam);
                     tableDomDataRam += rowDataRam + '</tr>';
                 }
                 tableDomDataRam += '</table>';
+                console.log(tableDomDataRam);
                 (document.getElementById('tableSpotRam') as HTMLElement).innerHTML = tableDomDataRam;
             }
         });
