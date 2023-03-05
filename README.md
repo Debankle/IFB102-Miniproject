@@ -1,6 +1,6 @@
 # IFB102 Miniproject
 
-IFB103 Miniproject. Host a webserver on my Raspberry Pi. Run commands and view Pi data, have a login for security.
+IFB102 Miniproject. Host a webserver on my Raspberry Pi. Run commands and view Pi data, have a login for security.
 
 Using:
 - NodeJS
